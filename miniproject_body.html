@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>B.E.B</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    /* styles.css */
+    #splash-screen {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .mycards {
+        margin: 20px auto 20px auto;
+        width: 990px;
+        /* 카드 사이 여백 바꾸려면 여기 조절 */
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 203px;
+        height: 320px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card p {
+        color: #555;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 280px;
+        /* 원하는 높이로 설정 */
+        object-fit: cover;
+        /* 이미지를 카드 크기에 맞게 자름 */
+    }
+
+    .card-body {
+        height: 140px;
+        padding: 18px auto;
+        /* 카드 글자 */
+        /* display: flex; */
+        flex-direction: column;
+        justify-content: center;
+        /* 수직 방향으로 가운데 정렬 */
+        text-align: left;
+        /* 텍스트를 왼쪽으로 정렬 */
+    }
+</style>
+<script>
+    // script.js
+    window.addEventListener('load', () => {
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContent = document.getElementById('main-content');
+        const cardContainer = document.getElementById('card-container');
+
+        // 데이터 받아오는 함수 (백엔드 API 호출)
+        async function fetchData() {
+            try {
+                const response = await fetch('https://api.example.com/cards'); // 백엔드 API URL
+                const data = await response.json();
+                createCards(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // 카드 생성하는 함수
+        function createCards(data) {
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+            <h2>${item.title}</h2>
+            <p>${item.description}</p>
+        `;
+                cardContainer.appendChild(card);
+            });
+
+            splashScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('#card-container .card');
+            const row = document.getElementById('card');
+            cards.forEach(card => {
+                row.appendChild(card);
+            });
+        });
+
+        // 데이터 받아와서 카드 생성 시작
+        fetchData();
+
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+        }, 300); // 1초 후에 스플래쉬 스크린 숨기기
+    });
+
+</script>
+
+<body>
+    <div id="splash-screen">
+        <h1>Loading...</h1>
+    </div>
+
+    <div class="mycards">
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <a href="https://namu.wiki/w/%EC%A7%B1%EA%B5%AC" style="text-decoration: none; color: inherit;">
+                    <div class="card d-flex flex-column h-100">
+                        <img src="https://i.namu.wiki/i/_R_qaUVF-119wXyWLVLwYSPjurt96r9jHOqJ4NB3ReN5Bs6GxVP_fQCEPI32IQZDRgIyku184gWEq7byTpP7ng.webp"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">조은형</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">ENTJ</h6>
+                            <p class="card-text">끝까지 최선을 다하겠습니다.</p>
+                        </div>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <a href="https://namu.wiki/w/%EC%82%AC%EC%BF%A0%EB%9D%BC%EB%8B%A4%20%EB%84%A4%EB%84%A4"
+                style="text-decoration: none; color: inherit;">
+                <div class="card h-100">
+                    <img src="https://previews.dropbox.com/p/thumb/ACVptyYqlx0i83rQrglN0BnO2H2wnvSeNmnsddQmAMDI2xvLXntOp8kuULfAhSCvSMWTBVcvdHmsFJNh0AAJwMcolXwz1j-DAOR-HsAd1gsX4M9NyUaMhTdgRiUjGvsNAXY8POjcljoGiTMYHvmZtSg-fxpwz_H_tpyh5Ucp2HmySD_fv-GAeXZbTeJ5TC_LQp5p6ygopzV9AmwRskw8RUTDJcsB5sD_mxEe_KAMb1Fsi2IhfDaH0bD6jA-FXeDg_le8lCsfTAEjXRF0JF4beQdBR9MmrShnSduNpH8Qo3j2vJmVI27AwWRkVw1jiaqr1jEH3jMRrjwFrpM57FUU-czH/p.jpeg"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">이가연</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">INFJ</h6>
+                        <p class="card-text">열심히 하겠습니다~ 화이팅</p>
+                    </div>
+            </a>
+        </div>
+
+    </div>
+    <div class="col">
+        <a href="https://namu.wiki/w/%EC%B9%B4%EC%9E%90%EB%A7%88%20%ED%86%A0%EC%98%A4%EB%A3%A8"
+            style="text-decoration: none; color: inherit;">
+            <div class="card h-100">
+                <img src="https://pbs.twimg.com/media/EhEPr1jUMAAsJeL.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">안예환</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">ENFP</h6>
+                    <p class="card-text">잘 부탁드립니다 파이팅!</p>
+                </div>
+        </a>
+    </div>
+
+    </div>
+    <div class="col">
+        <a href="https://namu.wiki/w/%EC%82%AC%ED%86%A0%20%EB%A7%88%EC%82%AC%EC%98%A4"
+            style="text-decoration: none; color: inherit;">
+            <div class="card h-100">
+                <img src="https://kr-cdn.spooncast.net/profiles/p/zv6jkpibmDg9d/c6b6c4b3-8494-46d1-93a7-e54f90d9ae9a-M.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">김우진</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">ISFP</h6>
+                    <p class="card-text">다같이 열심히 해봐요</p>
+                </div>
+        </a>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
